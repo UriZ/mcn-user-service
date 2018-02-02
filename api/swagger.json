@@ -1,0 +1,80 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MCN user service API",
+    "description": "user service api",
+    "version": "1.0"
+  },
+  "produces": ["application/json"],
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "paths": {
+    "/users": {
+      "post": {
+        "x-swagger-router-controller": "users",
+        "operationId": "createUser",
+        "tags": ["/users"],
+        "description": "creates a user in the database.",
+        "parameters": [
+          {
+            "name": "fb_user_id",
+            "in": "query",
+            "description": "The FB user id derived from FB access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The FB user name from FB access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The FB email from FB access token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "$ref": "#/definitions/UserCreated"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+
+
+    "UserCreated":{
+      "properties": {
+        "userID":{
+          "type": "string"
+        }
+      },
+      "required" : ["userID"]
+
+    },
+
+    "Error": {
+      "properties": {
+        "errorMessage": {
+          "type": "string"
+        }
+      },
+      "required": ["errorMessage"]
+    }
+  }
+}
