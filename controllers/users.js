@@ -1,6 +1,7 @@
 'use strict';
 
 
+const MongoClient = require('mongodb').MongoClient;
 
 let createUserData = (userId, userName, email)=>{
     let userRecord = {
@@ -36,10 +37,39 @@ module.exports.createUser = function createUser (req, res) {
 
     console.log(JSON.stringify(record));
 
+    const url = 'ds123718.mlab.com:23718';
 
+// Database Name
+    const dbName = 'mcn-users';
+
+// Use connect method to connect to the server
+    MongoClient.connect(url).then((db)=>{
+    console.log("connected to mongo");
+
+
+
+    }).catch((error)=>{console.log(error)});
+
+    res.send(record);
+
+
+
+    // catch(
+    //
+    //
+    //
+    //
+    // ), function(err, client) {
+    //     assert.equal(null, err);
+    //     console.log("Connected successfully to server");
+    //
+    //     const db = client.db(dbName);
+    //
+    //     client.close();
+    // });
     // const certificateId = request.swagger.params.certificate_id.value;
 
 
-
-    res.send(record);
+res.send("Errrorrrrr");
+    // res.send(record);
 };
