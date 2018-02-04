@@ -6,7 +6,7 @@
     "version": "1.0"
   },
   "produces": ["application/json"],
-  "host": "localhost:5000",
+  "host": "mcn-user-service.herokuapp.com",
   "basePath": "/api",
   "paths": {
     "/users": {
