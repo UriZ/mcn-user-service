@@ -6,7 +6,8 @@
     "version": "1.0"
   },
   "produces": ["application/json"],
-  "host": "mcn-user-service.herokuapp.com",
+  "host": "localhost:5000",
+
   "basePath": "/api",
   "paths": {
     "/users": {
@@ -24,7 +25,7 @@
             "type": "string"
           },
           {
-            "name": "name",
+            "name": "fb_user_name",
             "in": "query",
             "description": "The FB user name from FB access token",
             "required": true,
