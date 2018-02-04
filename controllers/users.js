@@ -41,5 +41,5 @@ module.exports.createUser = function createUser (req, res) {
 
 
 
-    res.send(JSON.stringify(record));
+    res.send(record);
 };
