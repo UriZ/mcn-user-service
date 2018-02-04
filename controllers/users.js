@@ -37,7 +37,7 @@ module.exports.createUser = function createUser (req, res) {
 
     console.log(JSON.stringify(record));
 
-    const url = 'ds123718.mlab.com:23718';
+    const url = 'mongodb://test1:abc123@ds123718.mlab.com:23718';
 
 // Database Name
     const dbName = 'mcn-users';
