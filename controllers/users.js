@@ -45,12 +45,12 @@ module.exports.createUser = function createUser (req, res) {
 // Use connect method to connect to the server
     MongoClient.connect(url).then((db)=>{
     console.log("connected to mongo");
+        res.send(record);
 
 
 
     }).catch((error)=>{console.log(error)});
 
-    res.send(record);
 
 
 
