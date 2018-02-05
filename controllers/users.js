@@ -70,6 +70,6 @@ module.exports.createUser = function createUser (req, res) {
     // const certificateId = request.swagger.params.certificate_id.value;
 
 
-res.send("error connecting to mongo");
+res.send("error connecting to mongo db ");
     // res.send(record);
 };
