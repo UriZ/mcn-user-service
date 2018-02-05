@@ -37,10 +37,10 @@ module.exports.createUser = function createUser (req, res) {
 
     console.log(JSON.stringify(record));
 
-    const url = 'mongodb://test1:abc123@ds123718.mlab.com:23718';
+    const url = process.env.DB_URL;
 
 // Database Name
-    const dbName = 'mcn-users';
+    const dbName = process.env.DB_NAME;
 
 // Use connect method to connect to the server
     MongoClient.connect(url).then((db)=>{
