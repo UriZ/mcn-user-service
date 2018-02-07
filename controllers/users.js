@@ -2,6 +2,8 @@
 
 
 const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
 
 let createUserData = (userId, userName, email)=>{
     let userRecord = {
@@ -17,6 +19,23 @@ let createUserData = (userId, userName, email)=>{
     return userRecord;
 
 };
+
+
+
+const insertUserToDB = function(db, callback, userDoc) {
+    // Get USERS collection
+    const collection = db.collection(process.env.USERS_COLLECTION);
+    // Insert some documents
+    collection.insert(
+        userDoc, (err, result)=> {
+        assert.equal(err, null);
+        console.log("Inserted user documents into collection");
+        callback(result);
+    });
+}
+
+
+
 
 
 module.exports.createUser = function createUser (req, res) {
@@ -35,41 +54,26 @@ module.exports.createUser = function createUser (req, res) {
 
     let record = createUserData(userID,userName, email);
 
-    console.log(JSON.stringify(record));
-
-    const url = 'mongodb://test1:abc123@ds123718.mlab.com:23718';
+    const url = process.env.DB_URL;
 
 // Database Name
-    const dbName = 'mcn-users';
-
-// Use connect method to connect to the server
-    MongoClient.connect(url).then((db)=>{
-    console.log("connected to mongo");
-        res.send(record);
+    const dbName = process.env.DB_NAME;
 
 
+    // Use connect to the server
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected to db");
 
-    }).catch((error)=>{console.log(error)});
+        const db = client.db(dbName);
 
-
-
-
-    // catch(
-    //
-    //
-    //
-    //
-    // ), function(err, client) {
-    //     assert.equal(null, err);
-    //     console.log("Connected successfully to server");
-    //
-    //     const db = client.db(dbName);
-    //
-    //     client.close();
-    // });
-    // const certificateId = request.swagger.params.certificate_id.value;
+        insertUserToDB(db, function(result) {
+            console.log("document inserted");
+            console.log(result.ops);
+            client.close();
+            res.send(200);
+        }, record);
+    });
 
 
-res.send("error connecting to mongo db!! ");
-    // res.send(record);
 };
