@@ -5,9 +5,9 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 
-let createUserData = (userId, userName, email)=>{
+let createUserData = (fbUserID, userName, email)=>{
     let userRecord = {
-        "userID": userId,
+        "fbUserID": fbUserID,
         "userName": userName,
         "email": email,
         "preferences":{
@@ -46,13 +46,13 @@ module.exports.createUser = function createUser (req, res) {
         console.log("missing id");
     }
     // get id from request
-    const userID = req.swagger.params.fb_user_id.value;
+    const fbUserID = req.swagger.params.fb_user_id.value;
     const userName = req.swagger.params.fb_user_name.value;
     const email = req.swagger.params.email.value;
 
-    console.log(userID);
+    console.log(fbUserID);
 
-    let record = createUserData(userID,userName, email);
+    let record = createUserData(fbUserID,userName, email);
 
     const url = process.env.DB_URL;
 
