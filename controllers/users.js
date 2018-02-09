@@ -7,6 +7,7 @@ const assert = require('assert');
 
 let createUserData = (fbUserID, userName, email)=>{
     let userRecord = {
+        "_id":fbUserID,
         "fbUserID": fbUserID,
         "userName": userName,
         "email": email,
@@ -59,7 +60,7 @@ module.exports.getUser = function getUser (req, res){
         const db = client.db(dbName);
         const collection = db.collection(process.env.USERS_COLLECTION);
         let id = req.swagger.params.fb_user_id.value;
-        let cursor = collection.findOne({"fbUserID":id}, (err,doc)=>{
+        let cursor = collection.findOne({"_id":id}, (err,doc)=>{
             if (err){
                 res.send(err);
             }
@@ -68,20 +69,17 @@ module.exports.getUser = function getUser (req, res){
             }
         });
 
-        // cursor.count((err,count)=>{
-        //     console.log("cursopr count" + count);
-        // });
-        // cursor.forEach((elem)=>{
-        //    console.log(elem);
-        // });
-        //
-        // res.send(200);
 
     });
 
 }
 
 
+/**
+ * create a new user in the db
+ * @param req
+ * @param res
+ */
 module.exports.createUser = function createUser (req, res) {
 
 
