@@ -51,7 +51,38 @@
             }
           }
         }
+      },
+
+      "get": {
+        "x-swagger-router-controller": "users",
+        "operationId": "getUser",
+        "tags": ["/users"],
+        "description": "get user data from database.",
+        "parameters": [
+          {
+            "name": "fb_user_id",
+            "in": "query",
+            "description": "The FB user id derived from FB access token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "$ref": "#/definitions/UserCreated"
+            }
+          }
+        }
       }
+
     }
   },
   "definitions": {

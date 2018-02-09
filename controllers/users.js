@@ -36,6 +36,36 @@ const insertUserToDB = function(db, callback, userDoc) {
 
 
 
+module.exports.getUser = function getUser (req, res){
+
+    const url = process.env.DB_URL;
+
+    // Database Name
+    const dbName = process.env.DB_NAME;
+
+
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected to db");
+
+        const db = client.db(dbName);
+        const collection = db.collection(process.env.USERS_COLLECTION);
+        let id = req.swagger.params.fb_user_id.value;
+        let cursor = collection.find({fbUserId:id});
+
+
+        cursor.count((err,count)=>{
+            console.log("cursopr count" + count);
+        });
+        cursor.forEach((elem)=>{
+           console.log(elem);
+        });
+
+        res.send(200);
+
+    });
+
+}
 
 
 module.exports.createUser = function createUser (req, res) {
@@ -56,7 +86,7 @@ module.exports.createUser = function createUser (req, res) {
 
     const url = process.env.DB_URL;
 
-// Database Name
+    // Database Name
     const dbName = process.env.DB_NAME;
 
 
