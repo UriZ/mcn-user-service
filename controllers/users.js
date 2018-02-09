@@ -51,8 +51,7 @@ module.exports.getUser = function getUser (req, res){
         const db = client.db(dbName);
         const collection = db.collection(process.env.USERS_COLLECTION);
         let id = req.swagger.params.fb_user_id.value;
-        let cursor = collection.find({fbUserId:id});
-
+        let cursor = collection.find({"fbUserID":id});
 
         cursor.count((err,count)=>{
             console.log("cursopr count" + count);
