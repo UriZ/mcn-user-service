@@ -38,10 +38,18 @@ const insertUserToDB = function(db, callback, userDoc) {
 
 module.exports.getUser = function getUser (req, res){
 
+    // db url
     const url = process.env.DB_URL;
 
     // Database Name
     const dbName = process.env.DB_NAME;
+    try{
+        assert.equal(null, "1");
+    }
+    catch(err){
+        console.log("caught the error" + err);
+}
+
 
 
     MongoClient.connect(url, function(err, client) {
@@ -51,16 +59,23 @@ module.exports.getUser = function getUser (req, res){
         const db = client.db(dbName);
         const collection = db.collection(process.env.USERS_COLLECTION);
         let id = req.swagger.params.fb_user_id.value;
-        let cursor = collection.find({"fbUserID":id});
-
-        cursor.count((err,count)=>{
-            console.log("cursopr count" + count);
+        let cursor = collection.findOne({"fbUserID":id}, (err,doc)=>{
+            if (err){
+                res.send(err);
+            }
+            else{
+                res.send(doc);
+            }
         });
-        cursor.forEach((elem)=>{
-           console.log(elem);
-        });
 
-        res.send(200);
+        // cursor.count((err,count)=>{
+        //     console.log("cursopr count" + count);
+        // });
+        // cursor.forEach((elem)=>{
+        //    console.log(elem);
+        // });
+        //
+        // res.send(200);
 
     });
 
