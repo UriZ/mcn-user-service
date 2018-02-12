@@ -85,7 +85,11 @@ module.exports.createUser = function createUser (req, res) {
     });
 };
 
-
+/**
+ * get user from db
+ * @param req
+ * @param res
+ */
 module.exports.getUser = function getUser (req, res){
 
     // db url
@@ -121,4 +125,37 @@ module.exports.getUser = function getUser (req, res){
 
     });
 
+};
+
+/**
+ * update user preferences
+ * @param req
+ * @param res
+ */
+module.exports.updateUserPref = function updateUserPref(req, res){
+    // db url
+    const url = process.env.DB_URL;
+
+    // Database Name
+    const dbName = process.env.DB_NAME;
+
+
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected to db");
+
+        const db = client.db(dbName);
+        const collection = db.collection(process.env.USERS_COLLECTION);
+        let id = req.swagger.params.userID.value;
+        let cursor = collection.findOne({"_id":id}, (err,doc)=>{
+            if (err){
+                res.send(err);
+            }
+            else{
+                res.send("ok!!!!!!!!!!!!!!!!!!!!!!!now update pref");
+            }
+        });
+
+
+    });
 }
