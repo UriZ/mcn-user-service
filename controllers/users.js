@@ -8,7 +8,6 @@ const assert = require('assert');
 let createUserData = (fbUserID, userName, email)=>{
     let userRecord = {
         "_id":fbUserID,
-        "fbUserID": fbUserID,
         "userName": userName,
         "email": email,
         "preferences":{
