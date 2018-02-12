@@ -83,7 +83,85 @@
         }
       }
 
+    },
+
+    "/users/{userID}/preferences": {
+      "put": {
+        "x-swagger-router-controller": "users",
+        "operationId": "updateUserPref",
+        "tags": ["/users"],
+        "description": "update user preferences",
+        "parameters": [
+          {
+            "name": "preferences",
+            "in": "body",
+            "description": "user preferences",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updatePref"
+            }
+          },
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          }
+
+        ],
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request."
+          }
+        }
+      },
+
+      "get": {
+        "x-swagger-router-controller": "users",
+        "operationId": "getUserPref",
+        "tags": ["/users"],
+        "description": "get user preferences from database.",
+        "parameters":[
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "$ref": "#/definitions/updatePref"
+            }
+          }
+        }
+      }
     }
+
+
+
+
+
+
+
+
+
   },
   "definitions": {
 
@@ -95,6 +173,23 @@
         }
       },
       "required" : ["userID"]
+
+    },
+
+    "updatePref":{
+      "type" : "object",
+      "required": [
+        "currency",
+        "operation"
+      ],
+      "properties":{
+        "currency":{
+          "type":"string"
+        },
+        "operation":{
+          "type": "string"
+        }
+      }
 
     },
 
