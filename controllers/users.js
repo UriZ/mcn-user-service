@@ -36,45 +36,6 @@ const insertUserToDB = function(db, callback, userDoc) {
 }
 
 
-
-module.exports.getUser = function getUser (req, res){
-
-    // db url
-    const url = process.env.DB_URL;
-
-    // Database Name
-    const dbName = process.env.DB_NAME;
-    try{
-        assert.equal(null, "1");
-    }
-    catch(err){
-        console.log("caught the error" + err);
-}
-
-
-
-    MongoClient.connect(url, function(err, client) {
-        assert.equal(null, err);
-        console.log("Connected to db");
-
-        const db = client.db(dbName);
-        const collection = db.collection(process.env.USERS_COLLECTION);
-        let id = req.swagger.params.fb_user_id.value;
-        let cursor = collection.findOne({"_id":id}, (err,doc)=>{
-            if (err){
-                res.send(err);
-            }
-            else{
-                res.send(doc);
-            }
-        });
-
-
-    });
-
-}
-
-
 /**
  * create a new user in the db
  * @param req
@@ -122,6 +83,42 @@ module.exports.createUser = function createUser (req, res) {
 
         }, record);
     });
-
-
 };
+
+
+module.exports.getUser = function getUser (req, res){
+
+    // db url
+    const url = process.env.DB_URL;
+
+    // Database Name
+    const dbName = process.env.DB_NAME;
+    try{
+        assert.equal(null, "1");
+    }
+    catch(err){
+        console.log("caught the error" + err);
+    }
+
+
+
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected to db");
+
+        const db = client.db(dbName);
+        const collection = db.collection(process.env.USERS_COLLECTION);
+        let id = req.swagger.params.fb_user_id.value;
+        let cursor = collection.findOne({"_id":id}, (err,doc)=>{
+            if (err){
+                res.send(err);
+            }
+            else{
+                res.send(doc);
+            }
+        });
+
+
+    });
+
+}
