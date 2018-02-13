@@ -180,7 +180,8 @@
       "type" : "object",
       "required": [
         "currency",
-        "operation"
+        "operation",
+        "amount"
       ],
       "properties":{
         "currency":{
@@ -188,7 +189,14 @@
         },
         "operation":{
           "type": "string"
+        },
+        "amount":{
+          "type": "integer"
+        },
+        "publicProfile":{
+          "type": "boolean"
         }
+
       }
 
     },

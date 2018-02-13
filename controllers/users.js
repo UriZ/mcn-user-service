@@ -20,7 +20,22 @@ let createUserData = (fbUserID, userName, email)=>{
 
 };
 
+/**
+ * //!!!!!!! error handling default values
+ * create a pref object o be inserted in the db
+ * @param preferencesInput
+ */
+let createUserPref= (preferencesInput)=>{
 
+    let preferencesToUpdate = {};
+    preferencesToUpdate.currency = preferencesInput.currency;
+    preferencesToUpdate.operation = preferencesInput.operation;
+    preferencesToUpdate.amount = preferencesInput.amount;
+    preferencesToUpdate.publicProfile = preferencesInput.publicProfile ? preferencesInput.publicProfile : false;
+    return preferencesToUpdate;
+
+
+};
 
 const insertUserToDB = function(db, callback, userDoc) {
     // Get USERS collection
@@ -85,6 +100,9 @@ module.exports.createUser = function createUser (req, res) {
     });
 };
 
+
+
+
 /**
  * get user from db
  * @param req
@@ -147,15 +165,60 @@ module.exports.updateUserPref = function updateUserPref(req, res){
         const db = client.db(dbName);
         const collection = db.collection(process.env.USERS_COLLECTION);
         let id = req.swagger.params.userID.value;
-        let cursor = collection.findOne({"_id":id}, (err,doc)=>{
+        let preferencesFromRequest = req.swagger.params.preferences.value;
+
+        let preferencesToUpdate = createUserPref(preferencesFromRequest);
+
+
+        collection.updateOne({
+            "_id":id,
+        }, {
+            $set: {"preferences":preferencesToUpdate}
+        }, (err, result)=>{
+
             if (err){
-                res.send(err);
+                res.status(500).send(err);
             }
             else{
-                res.send("ok!!!!!!!!!!!!!!!!!!!!!!!now update pref");
+                res.status(200).send("preferences updated");
             }
         });
 
 
     });
+}
+
+/**
+ * get user preferences from db
+ * @param req
+ * @param res
+ */
+module.exports.getUserPref = (req, res)=>{
+
+    const url = process.env.DB_URL;
+
+    // Database Name
+    const dbName = process.env.DB_NAME;
+
+
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected to db");
+
+        const db = client.db(dbName);
+        const collection = db.collection(process.env.USERS_COLLECTION);
+        let id = req.swagger.params.userID.value;
+        let cursor = collection.findOne({"_id":id}, (err,doc)=>{
+            if (err){
+                res.status(500).send(err);
+            }
+            else{
+                res.status(200).send(doc.preferences);
+            }
+        });
+
+
+    });
+
+
 }
