@@ -185,9 +185,9 @@ module.exports.updateUserPref = function updateUserPref(req, res){
                     // no user docuemnt was found - error
                     res.status(500).send("Error - user not found ")
                 }
-
-
-                res.status(200).send("preferences updated");
+                else{
+                    res.status(200).send("preferences updated");
+                }
             }
         });
 
