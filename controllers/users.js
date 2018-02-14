@@ -180,6 +180,13 @@ module.exports.updateUserPref = function updateUserPref(req, res){
                 res.status(500).send(err);
             }
             else{
+
+                if (result.matchedCount == 0 || result.modifiedCount == 0){
+                    // no user docuemnt was found - error
+                    res.status(500).send("Error - user not found ")
+                }
+
+
                 res.status(200).send("preferences updated");
             }
         });

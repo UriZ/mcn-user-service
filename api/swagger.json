@@ -82,7 +82,6 @@
           }
         }
       }
-
     },
 
     "/users/{userID}/preferences": {
@@ -153,15 +152,6 @@
         }
       }
     }
-
-
-
-
-
-
-
-
-
   },
   "definitions": {
 
