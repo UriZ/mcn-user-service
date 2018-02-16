@@ -115,12 +115,8 @@ module.exports.getUser = function getUser (req, res){
 
     // Database Name
     const dbName = process.env.DB_NAME;
-    try{
-        assert.equal(null, "1");
-    }
-    catch(err){
-        console.log("caught the error" + err);
-    }
+
+
 
 
 
@@ -130,7 +126,7 @@ module.exports.getUser = function getUser (req, res){
 
         const db = client.db(dbName);
         const collection = db.collection(process.env.USERS_COLLECTION);
-        let id = req.swagger.params.fb_user_id.value;
+        let id = req.swagger.params.userID.value;
         let cursor = collection.findOne({"_id":id}, (err,doc)=>{
             if (err){
                 res.send(err);

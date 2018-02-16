@@ -51,17 +51,24 @@
             }
           }
         }
-      },
+      }
+    },
 
+
+
+
+    "/users/{userID}": {
       "get": {
         "x-swagger-router-controller": "users",
         "operationId": "getUser",
-        "tags": ["/users"],
+        "tags": [
+          "/users"
+        ],
         "description": "get user data from database.",
         "parameters": [
           {
-            "name": "fb_user_id",
-            "in": "query",
+            "name": "userID",
+            "in": "path",
             "description": "The FB user id derived from FB access token",
             "required": true,
             "type": "string"
