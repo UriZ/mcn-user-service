@@ -51,6 +51,27 @@
             }
           }
         }
+      },
+
+      "get": {
+        "x-swagger-router-controller": "users",
+        "operationId": "getAllUsers",
+        "tags": ["/users"],
+        "description": "get all users in the database.",
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "$ref": "#/definitions/usersList"
+            }
+          }
+        }
       }
     },
 
@@ -162,6 +183,34 @@
   },
   "definitions": {
 
+
+    "usersList":{
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UserRecord"
+      }
+
+    },
+
+
+
+    "UserRecord":{
+      "type":"object",
+      "properties":{
+        "userID":{
+          "type": "string"
+        },
+        "userName": {
+          "type":"string"
+        },
+        "email": {
+          "type":"string"
+        },
+        "preferences":{
+          "$ref":"#/definitions/updatePref"
+        }
+      }
+    },
 
     "UserCreated":{
       "properties": {

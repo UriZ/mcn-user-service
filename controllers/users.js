@@ -225,3 +225,35 @@ module.exports.getUserPref = (req, res)=>{
 
 
 }
+
+
+module.exports.getAllUsers = (req,res)=>{
+
+
+    const url = process.env.DB_URL;
+
+    // Database Name
+    const dbName = process.env.DB_NAME;
+
+
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        console.log("Connected to db");
+
+        const db = client.db(dbName);
+        const collection = db.collection(process.env.USERS_COLLECTION);
+
+        collection.find().toArray((err,items)=>{
+           if (err){
+               res.status(500).send(err);
+
+           }
+           else{
+               res.status(200).send(items);
+
+           }
+        });
+
+    });
+
+}
