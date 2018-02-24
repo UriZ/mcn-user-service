@@ -11,7 +11,12 @@ let createUserData = (fbUserID, userName, email)=>{
         "userName": userName,
         "email": email,
         "preferences":{
-            "key":"val"
+
+            "currency": "dogcoin",
+            "operation": "sell",
+            "amount": 0,
+            "publicProfile": true,
+            "matchFriends": true
         }
     };
 
