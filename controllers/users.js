@@ -72,7 +72,7 @@ module.exports.createUser = function createUser (req, res) {
     const fbUserID = req.swagger.params.fb_user_id.value;
     const userName = req.swagger.params.fb_user_name.value;
     const email = req.swagger.params.email.value;
-    const prfilePic = req.swagger.params.prfilePic.value;
+    const prfilePic = req.swagger.params.profilePic.value;
 
     let record = createUserData(fbUserID,userName, email,prfilePic);
 
