@@ -35,6 +35,13 @@
             "description": "The FB email from FB access token",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "profilePic",
+            "in": "query",
+            "description": "The FB profile picture",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -111,6 +118,44 @@
         }
       }
     },
+
+
+
+    "/users/{userID}": {
+      "get": {
+        "x-swagger-router-controller": "users",
+        "operationId": "getUser",
+        "tags": [
+          "/users"
+        ],
+        "description": "get user data from database.",
+        "parameters": [
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "The FB user id derived from FB access token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "$ref": "#/definitions/UserCreated"
+            }
+          }
+        }
+      }
+    },
+
+
 
     "/users/{userID}/preferences": {
       "put": {

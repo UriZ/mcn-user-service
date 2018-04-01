@@ -5,11 +5,12 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 
-let createUserData = (fbUserID, userName, email)=>{
+let createUserData = (fbUserID, userName, email, profilePic)=>{
     let userRecord = {
         "_id":fbUserID,
         "userName": userName,
         "email": email,
+        "profilePic": profilePic,
         "preferences":{
 
             "currency": "dogcoin",
@@ -71,8 +72,9 @@ module.exports.createUser = function createUser (req, res) {
     const fbUserID = req.swagger.params.fb_user_id.value;
     const userName = req.swagger.params.fb_user_name.value;
     const email = req.swagger.params.email.value;
+    const prfilePic = req.swagger.params.prfilePic.value;
 
-    let record = createUserData(fbUserID,userName, email);
+    let record = createUserData(fbUserID,userName, email,prfilePic);
 
     // db url
     const url = process.env.DB_URL;
