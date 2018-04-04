@@ -94,6 +94,7 @@ module.exports.createUser = function createUser (req, res) {
 
 
             if (err){
+                console.log("error inserting user into db");
                 res.status(500).send(err);
             }
             else{
