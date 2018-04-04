@@ -117,7 +117,7 @@ module.exports.createUser = function createUser (req, res) {
                 let error;
                 // user is already in db
                 if ((err.code == 11000) || (err.errmsg.includes("duplicate key"))) {
-                     error = createError(err, "userService", UNKNOWN, "error inserting user into db - user already exists");
+                     error = createError(err, "userService", USER_EXISTS, "error inserting user into db - user already exists");
                 }
                 else{
                      error = createError(err, "userService", UNKNOWN, "error inserting user into db - unknown error");
