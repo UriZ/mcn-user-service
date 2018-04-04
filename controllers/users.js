@@ -4,6 +4,24 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
+const USER_EXISTS = "USER_EXISTS";
+const UNKNOWN = "UNKNOWN";
+
+
+/**
+ * create a unified error object across all microservices
+ */
+let createError = (error, serviceName, errorCode, errorMessage)=>{
+
+    return {
+        "error": error,
+        "service": serviceName,
+        "errorCode": errorCode,
+        "errorMessage": errorMessage
+    }
+
+}
+
 
 let createUserData = (fbUserID, userName, email, profilePic)=>{
     let userRecord = {
@@ -95,7 +113,17 @@ module.exports.createUser = function createUser (req, res) {
 
             if (err){
                 console.log("error inserting user into db: " + err);
-                res.status(500).send(err);
+
+                let error;
+                // user is already in db
+                if ((err.code == 11000) || (err.errmsg.includes("duplicate key"))) {
+                     error = createError(err, "userService", USER_EXISTS, "error inserting user into db - user already exists");
+                }
+                else{
+                     error = createError(err, "userService", UNKNOWN, "error inserting user into db - unknown error");
+                }
+                res.status(500).send(error);
+
             }
             else{
                 console.log("document inserted");
