@@ -33,7 +33,7 @@ let createUserData = (fbUserID, userName, email, profilePic)=>{
 
             "currency": "dogcoin",
             "operation": "sell",
-            "amount": 0,
+            "amount": "100$",
             "publicProfile": true,
             "matchFriends": true
         }
