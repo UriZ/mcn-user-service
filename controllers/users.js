@@ -6,7 +6,7 @@ const assert = require('assert');
 
 const USER_EXISTS = "USER_EXISTS";
 const UNKNOWN = "UNKNOWN";
-
+const NO_USER = "NO_USER";
 
 /**
  * create a unified error object across all microservices
@@ -152,10 +152,6 @@ module.exports.getUser = function getUser (req, res){
     // Database Name
     const dbName = process.env.DB_NAME;
 
-
-
-
-
     MongoClient.connect(url, function(err, client) {
         assert.equal(null, err);
         console.log("Connected to db");
@@ -165,13 +161,24 @@ module.exports.getUser = function getUser (req, res){
         let id = req.swagger.params.userID.value;
         let cursor = collection.findOne({"_id":id}, (err,doc)=>{
             if (err){
-                res.send(err);
+                console.log(err);
+               let error = createError(err, "userService", NO_USER, "User not found in DB");
+
+                res.status(500).send(err);
             }
             else{
-                res.send(doc);
+
+                if (doc == null){
+                    console.log("user not found in db ");
+                    let error = createError(err, "userService", NO_USER, "User not found in DB");
+                    res.status(500).send(err);
+                }
+                else
+                {
+                    res.send(doc);
+                }
             }
         });
-
 
     });
 
@@ -247,6 +254,7 @@ module.exports.getUserPref = (req, res)=>{
         const db = client.db(dbName);
         const collection = db.collection(process.env.USERS_COLLECTION);
         let id = req.swagger.params.userID.value;
+
         let cursor = collection.findOne({"_id":id}, (err,doc)=>{
             if (err){
                 res.status(500).send(err);
