@@ -170,7 +170,7 @@ module.exports.getUser = function getUser (req, res){
 
                 if (doc == null){
                     console.log("user not found in db ");
-                    let error = createError(err, "userService", NO_USER, "User not found in DB");
+                    let error = createError("User not found in DB", "userService", NO_USER, "User not found in DB");
                     res.status(500).send(err);
                 }
                 else
