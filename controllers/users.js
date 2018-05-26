@@ -222,6 +222,7 @@ module.exports.updateUserPref = function updateUserPref(req, res){
 
                 if (result.matchedCount == 0 || result.modifiedCount == 0){
                     // no user docuemnt was found - error
+                    console.log("Error updating pref - user not found" );
                     res.status(500).send("Error - user not found ")
                 }
                 else{
