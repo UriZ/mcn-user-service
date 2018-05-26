@@ -226,6 +226,7 @@ module.exports.updateUserPref = function updateUserPref(req, res){
                     res.status(500).send("Error - user not found ")
                 }
                 else{
+                    console.log("preferences successfully updated");
                     res.status(200).send("preferences updated");
                 }
             }
