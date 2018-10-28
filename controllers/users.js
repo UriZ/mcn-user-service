@@ -31,7 +31,7 @@ let createUserData = (fbUserID, userName, email, profilePic)=>{
         "profilePic": profilePic,
         "preferences":{
 
-            "currency": "dogcoin",
+            "currency": "bitcoin",
             "operation": "sell",
             "amount": "100$",
             "publicProfile": true,
@@ -46,7 +46,7 @@ let createUserData = (fbUserID, userName, email, profilePic)=>{
 
 /**
  * //!!!!!!! error handling default values
- * create a pref object o be inserted in the db
+ * create a pref object to be inserted in the db
  * @param preferencesInput
  */
 let createUserPref= (preferencesInput)=>{
@@ -68,8 +68,6 @@ const insertUserToDB = function(db, callback, userDoc) {
     collection.insert(
         userDoc, (err, result)=> {
 
-        // assert.equal(err, null);
-        // console.log("Inserted user documents into collection");
         callback(err,result);
     });
 }

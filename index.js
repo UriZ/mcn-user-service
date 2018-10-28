@@ -37,7 +37,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
     // Start the server
     http.createServer(app).listen(app.get('port'), function () {
-        console.log('Node app isdddd running on port', app.get('port'));
+        console.log('Node app is running on port', app.get('port'));
     });
 });
 
